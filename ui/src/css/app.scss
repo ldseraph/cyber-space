@@ -1,0 +1,17 @@
+// app global css in SCSS form
+
+// tailwind
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background: #f8f8f8;
+    color: #626262;
+  }
+
+  button:focus {
+    outline: none;
+  }
+}
