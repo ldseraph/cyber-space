@@ -1,8 +1,8 @@
 {
   "name": "cyber-space",
   "version": "0.0.1",
-  "description": "cyber Space",
-  "productName": "cyber Space",
+  "description": "Cyber Space",
+  "productName": "Cyber Space",
   "author": "ldseraph <ld.seraph@163.com>",
   "private": true,
   "scripts": {

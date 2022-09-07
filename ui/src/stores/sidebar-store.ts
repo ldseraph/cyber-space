@@ -22,32 +22,42 @@ export const useSidebarStore = defineStore('sidebar', {
     title: String(configs.app.name),
     logo: String(configs.layout.logo),
     menu: Array<sidebarHeaderMenu | sidebarItemsMenu>(
+      // {
+      //   name: 'sidebar.home',
+      //   icon: 'o_home',
+      //   url: '/',
+      // },
       {
-        name: 'Home',
-        icon: 'o_home',
-        url: '/',
+        name: 'sidebar.dashboard',
+        icon: 'o_dashboard',
+        url: '/dashboard',
       },
       {
-        name: 'My Cyberware',
+        name: 'sidebar.organization',
+        icon: 'o_corporate_fare',
+        url: '/organization'
+      },
+      {
+        name: 'sidebar.cyberware',
         icon: 'o_devices',
         url: '/cyberware'
       },
       {
-        name: 'Cyber Marketplace',
+        name: 'sidebar.marketplace',
         icon: 'o_store',
         url: '/marketplace',
       },
       {
-        name: 'Cyber Intelligence',
+        name: 'sidebar.intelligence',
         icon: 'o_psychology',
         url: '/intelligence'
       },
       {
-        name: 'Cyberbining',
+        name: 'sidebar.cyberbining',
         icon: 'o_router'
       },
       {
-        name: 'Settings',
+        name: 'sidebar.settings',
         icon: 'o_settings',
       }
     ),

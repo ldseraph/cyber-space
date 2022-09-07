@@ -1,9 +1,9 @@
 package main
 
 import (
+	"cyber-space/cmd"
 	"embed"
 	"io/fs"
-	"cyber-space/cmd"
 )
 
 //go:embed ui/dist/spa/*
