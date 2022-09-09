@@ -22,21 +22,21 @@ export const useSidebarStore = defineStore('sidebar', {
     title: String(configs.app.name),
     logo: String(configs.layout.logo),
     menu: Array<sidebarHeaderMenu | sidebarItemsMenu>(
-      // {
-      //   name: 'sidebar.home',
-      //   icon: 'o_home',
-      //   url: '/',
-      // },
+      {
+        name: 'sidebar.home',
+        icon: 'o_home',
+        url: '/',
+      },
       {
         name: 'sidebar.dashboard',
         icon: 'o_dashboard',
         url: '/dashboard',
       },
-      {
-        name: 'sidebar.organization',
-        icon: 'o_corporate_fare',
-        url: '/organization'
-      },
+      // {
+      //   name: 'sidebar.organization',
+      //   icon: 'o_corporate_fare',
+      //   url: '/organization'
+      // },
       {
         name: 'sidebar.cyberware',
         icon: 'o_devices',

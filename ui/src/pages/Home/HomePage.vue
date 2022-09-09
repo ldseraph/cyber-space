@@ -1,6 +1,6 @@
 <template>
   <q-page class="flex w-full content-start">
-    <div class="mb-16 w-full flex justify-center">
+    <!-- <div class="mb-16 w-full flex justify-center">
       <div class="w-1/2">
         <q-input v-model="search" :label="t('search')">
           <template v-slot:append>
@@ -74,53 +74,53 @@
           </q-card-section>
         </q-card>
       </div>
-    </div>
+    </div> -->
   </q-page>
 </template>
 
 <script lang="ts" setup>
-import { useI18n } from 'vue-i18n';
-import { ref } from 'vue';
-const { t } = useI18n();
-const search = ref('');
-const input = ref('');
-// 普通、精良、稀有、史诗、传说
-const cpberwares = ref([
-  {
-    name: 'aassss DS-86xxN-I8',
-    type: 'Visual Support',
-    img: 'http://www.cctvhkws.com/uploads/190730/1-1ZI01F634529.jpg',
-    quality: 'poor'
-  },
-  {
-    name: 'hikvision DS-86xxN-I8',
-    type: 'Visual Support',
-    img: 'http://www.cctvhkws.com/uploads/190730/1-1ZI01F634529.jpg',
-    quality: 'common'
-  },
-  {
-    name: 'hikvision DS-86xxN-I8',
-    type: 'Visual Support',
-    img: 'http://www.cctvhkws.com/uploads/190730/1-1ZI01F634529.jpg',
-    quality: 'uncommon'
-  },
-  {
-    name: 'hikvision DS-86xxN-I8',
-    type: 'Visual Support',
-    img: 'http://www.cctvhkws.com/uploads/190730/1-1ZI01F634529.jpg',
-    quality: 'rare'
-  },
-  {
-    name: 'hikvision DS-86xxN-I8',
-    type: 'Visual Support',
-    img: 'http://www.cctvhkws.com/uploads/190730/1-1ZI01F634529.jpg',
-    quality: 'epic'
-  },
-  {
-    name: 'hikvision DS-86xxN-I8',
-    type: 'Visual Support',
-    img: 'http://www.cctvhkws.com/uploads/190730/1-1ZI01F634529.jpg',
-    quality: 'legendary'
-  }
-]);
+// import { useI18n } from 'vue-i18n';
+// import { ref } from 'vue';
+// const { t } = useI18n();
+// const search = ref('');
+// const input = ref('');
+// // 普通、精良、稀有、史诗、传说
+// const cpberwares = ref([
+//   {
+//     name: 'aassss DS-86xxN-I8',
+//     type: 'Visual Support',
+//     img: 'http://www.cctvhkws.com/uploads/190730/1-1ZI01F634529.jpg',
+//     quality: 'poor'
+//   },
+//   {
+//     name: 'hikvision DS-86xxN-I8',
+//     type: 'Visual Support',
+//     img: 'http://www.cctvhkws.com/uploads/190730/1-1ZI01F634529.jpg',
+//     quality: 'common'
+//   },
+//   {
+//     name: 'hikvision DS-86xxN-I8',
+//     type: 'Visual Support',
+//     img: 'http://www.cctvhkws.com/uploads/190730/1-1ZI01F634529.jpg',
+//     quality: 'uncommon'
+//   },
+//   {
+//     name: 'hikvision DS-86xxN-I8',
+//     type: 'Visual Support',
+//     img: 'http://www.cctvhkws.com/uploads/190730/1-1ZI01F634529.jpg',
+//     quality: 'rare'
+//   },
+//   {
+//     name: 'hikvision DS-86xxN-I8',
+//     type: 'Visual Support',
+//     img: 'http://www.cctvhkws.com/uploads/190730/1-1ZI01F634529.jpg',
+//     quality: 'epic'
+//   },
+//   {
+//     name: 'hikvision DS-86xxN-I8',
+//     type: 'Visual Support',
+//     img: 'http://www.cctvhkws.com/uploads/190730/1-1ZI01F634529.jpg',
+//     quality: 'legendary'
+//   }
+// ]);
 </script>
