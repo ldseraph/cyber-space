@@ -47,6 +47,7 @@ onMounted(() => {
   .q-header,
   .q-page-container {
     transition: all 0.3s;
+    z-index: 999;
   }
 }
 
