@@ -1,38 +1,42 @@
 <template>
-  <q-layout
-    ref="qLayoutRef"
-    view="lHh Lpr lFf"
-    class="left-transition"
-    @resize="(size) => (layout.width = size.width)"
-  >
-    <RexSidebar/>
+  <q-scroll-area class="h-screen" :thumb-style="{
+    right: '3px',
+    borderRadius: '5px',
+    background: primary,
+    width: '6px',
+    opacity: '0.75',
+    zIndex: '4000'
+  }">
+    <q-layout ref="qLayoutRef" view="lHh Lpr lFf" class="left-transition"
+      @resize="(size) => (layout.width = size.width,layout.height = size.height)">
+      <RexSidebar />
 
-    <RexNavbar/>
+      <RexNavbar />
 
-    <q-page-container>
-      <router-view v-slot="{ Component }">
-        <template v-if="Component">
-          <transition appear :name="'zoom-fade'" mode="out-in">
-            <keep-alive>
-              <div class="flex justify-center overflow-hidden px-6">
+      <q-page-container>
+        <router-view v-slot="{ Component }">
+          <template v-if="Component">
+            <transition appear :name="'zoom-fade'" mode="out-in">
+              <keep-alive>
                 <component :is="Component"></component>
-              </div>
-            </keep-alive>
-          </transition>
-        </template>
-      </router-view>
-    </q-page-container>
-  </q-layout>
+              </keep-alive>
+            </transition>
+          </template>
+        </router-view>
+      </q-page-container>
+    </q-layout>
+  </q-scroll-area>
 </template>
 
 <script lang="ts" setup>
 import RexNavbar from './RexNavbar.vue';
 import RexSidebar from './sidebar/RexSidebar.vue';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, computed } from 'vue';
 import { useLayoutStore } from '@/stores/layout-store';
+import { getCssVar } from 'quasar';
+const primary: string = getCssVar('primary') || '#626262';
 
 const layout = useLayoutStore();
-
 const qLayoutRef = ref<{ $el: HTMLElement } | null>(null);
 onMounted(() => {
   if (qLayoutRef.value == null) {
@@ -44,6 +48,7 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .left-transition {
+
   .q-header,
   .q-page-container {
     transition: all 0.3s;
@@ -55,6 +60,7 @@ onMounted(() => {
 .zoom-fade-leave-active {
   transition: transform 0.35s, opacity 0.28s ease-in-out;
 }
+
 .zoom-fade-enter-from {
   transform: scale(0.97);
   opacity: 0;

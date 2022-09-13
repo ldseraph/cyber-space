@@ -4,7 +4,7 @@ cyber space
 参考 https://app.datacake.de
 https://id1945.github.io/vuexy-admin/
 https://dribbble.com/shots/5091455-Healthcare-Dashboard
-
+https://dribbble.com/shots/4918674-Web-Application-Management-for-Manufacturing-Company
 ## Install the dependencies
 
 ```bash

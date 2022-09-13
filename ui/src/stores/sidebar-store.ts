@@ -40,7 +40,7 @@ export const useSidebarStore = defineStore('sidebar', {
       {
         name: 'sidebar.cyberware',
         icon: 'o_devices',
-        url: '/cyberware'
+        url: '/temp'
       },
       {
         name: 'sidebar.marketplace',

@@ -1,6 +1,6 @@
 <template>
   <!-- bg-primary text-white -->
-  <q-header bordered class="z-auto bg-white">
+  <q-header bordered class="bg-white">
     <q-toolbar>
       <q-btn
         v-if="!sidebar.open"
