@@ -1,9 +1,9 @@
 <template>
   <q-scroll-area class="h-screen" :thumb-style="{
-    right: '3px',
+    right: '0px',
     borderRadius: '5px',
     background: primary,
-    width: '6px',
+    width: '4px',
     opacity: '0.75',
     zIndex: '4000'
   }">
