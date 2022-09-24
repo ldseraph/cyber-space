@@ -31,7 +31,7 @@
 <script lang="ts" setup>
 import RexNavbar from './RexNavbar.vue';
 import RexSidebar from './sidebar/RexSidebar.vue';
-import { onMounted, ref, computed } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useLayoutStore } from '@/stores/layout-store';
 import { getCssVar } from 'quasar';
 const primary: string = getCssVar('primary') || '#626262';
