@@ -20,7 +20,7 @@ import (
 	"path/filepath"
 	"time"
 
-	"cyber-space/pkg/version"
+	"video-intelligence/pkg/version"
 
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/cobra"
@@ -37,7 +37,7 @@ func persistentPreRun(cmd *cobra.Command, args []string) {
 }
 
 var root = &cobra.Command{
-	Long:             filepath.Base(os.Args[0]) + " is cyber space",
+	Long:             filepath.Base(os.Args[0]) + " is video intelligence system",
 	Version:          version.String(),
 	PersistentPreRun: persistentPreRun,
 }

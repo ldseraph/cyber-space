@@ -1,7 +1,7 @@
 package main
 
 import (
-	"cyber-space/cmd"
+	"video-intelligence/cmd"
 	"embed"
 	"io/fs"
 )

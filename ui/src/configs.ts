@@ -7,7 +7,8 @@ export default {
   },
 
   app: {
-    name: 'Cyber Space',
+    name: 'video intelligence',
+    lang: 'zn-CN'
     // showSettings: true,
     // tagsView: true,
     // fixedHeader: false,

@@ -38,22 +38,22 @@ export const useSidebarStore = defineStore('sidebar', {
       //   url: '/organization'
       // },
       {
-        name: 'sidebar.cyberware',
-        icon: 'o_devices',
-        url: '/temp'
+        name: 'sidebar.camera',
+        icon: 'videocam',
+        url: '/camera'
       },
-      {
-        name: 'sidebar.marketplace',
-        icon: 'o_store',
-        url: '/marketplace',
-      },
+      // {
+      //   name: 'sidebar.marketplace',
+      //   icon: 'o_store',
+      //   url: '/marketplace',
+      // },
       {
         name: 'sidebar.intelligence',
         icon: 'o_psychology',
         url: '/intelligence'
       },
       {
-        name: 'sidebar.cyberbining',
+        name: 'sidebar.databining',
         icon: 'o_router'
       },
       {

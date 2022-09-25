@@ -1,4 +1,4 @@
-module cyber-space
+module video-intelligence
 
 go 1.18
 

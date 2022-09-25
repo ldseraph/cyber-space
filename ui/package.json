@@ -1,8 +1,8 @@
 {
-  "name": "cyber-space",
+  "name": "video-intelligence",
   "version": "0.0.1",
-  "description": "Cyber Space",
-  "productName": "Cyber Space",
+  "description": "Video intelligence system",
+  "productName": "Video intelligence system",
   "author": "ldseraph <ld.seraph@163.com>",
   "private": true,
   "scripts": {
