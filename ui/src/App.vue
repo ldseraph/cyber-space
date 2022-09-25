@@ -33,6 +33,7 @@ i18n.locale = computed(() => {
 
 function loadLang(lang: string) {
   import(
+    /* @vite-ignore */
     '/lang/' + lang + '.mjs'
   ).then(lang => {
     $q.lang.set(lang.default)
