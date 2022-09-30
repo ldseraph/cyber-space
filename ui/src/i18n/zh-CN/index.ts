@@ -20,13 +20,12 @@ export default {
   },
   camera: {
     profile: {
-      UUID: '唯一编号',
+      deviceid: '唯一编号',
       name: '设备名称',
-      brand: '品牌',
-      product_model: '产品型号',
+      host: '网络地址',
       status: '状态',
       description: '说明',
-      registration_time: '注册时间'
+      created: '创建时间'
     },
     status: {
       online: '在线',

@@ -9,7 +9,7 @@ export default {
   app: {
     name: 'video intelligence',
     lang: 'zn-CN',
-    baseUrl: '/api'
+    baseUrl: '/'
     // showSettings: true,
     // tagsView: true,
     // fixedHeader: false,

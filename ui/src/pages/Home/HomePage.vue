@@ -7,13 +7,9 @@
 </template>
 
 <script lang="ts" setup>
-import { ping } from '@/api/ping';
+import { Ping, PingResData } from '@/api/ping';
 import { ref } from 'vue';
 
-const hello = ref('');
-
-ping().then((response) => {
-  hello.value = response.ping;
-});
-
+const pingRes: PingResData = await Ping();
+const hello = ref(pingRes.ping);
 </script>

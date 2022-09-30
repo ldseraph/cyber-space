@@ -18,7 +18,9 @@
           <template v-if="Component">
             <transition appear :name="'zoom-fade'" mode="out-in">
               <keep-alive>
-                <component :is="Component"></component>
+                <Suspense>
+                  <component :is="Component"></component>
+                </Suspense>
               </keep-alive>
             </transition>
           </template>

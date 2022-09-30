@@ -11,15 +11,24 @@
       </div>
     </div>
     <div class="basis-full pt-6">
-      <q-tabs align="left" v-model="tab" class="text-primary">
+      <q-tabs align="left" v-model="tab_index" class="text-primary">
         <q-tab :label="t('pages.camera.list')" name="list" />
         <q-tab :label="t('pages.camera.grid')" name="group" />
         <q-tab :label="t('pages.camera.map')" name="map" />
       </q-tabs>
 
-      <q-tab-panels v-model="tab" animated>
+      <q-tab-panels v-model="tab_index" animated>
         <q-tab-panel name="list">
-          <q-table :pagination="initialPagination" :rows="rows" :columns="columns" row-key="name">
+          <q-table ref="tableRef" :rows="rows" :columns="columns" row-key="id" v-model:pagination="pagination"
+            :loading="loading" :filter="filter" binary-state-sort @request="onRequest">
+            <template v-slot:top-right>
+              <q-input borderless dense debounce="300" v-model="filter" placeholder="Search">
+                <template v-slot:append>
+                  <q-icon name="search" />
+                </template>
+              </q-input>
+            </template>
+
             <template v-slot:body-cell-status="props">
               <q-td :props="props">
                 <div class="flex flex-nowrap items-center">
@@ -27,7 +36,7 @@
                   <div v-else-if="props.row.status == 'offline'" class="w-3 h-3 rounded-full bg-stone-500"></div>
                   <div v-else class="w-3 h-3 rounded-full"></div>
                   <div class="pl-2">
-                    {{props.value}}
+                    {{ props.value }}
                   </div>
                 </div>
               </q-td>
@@ -36,9 +45,9 @@
         </q-tab-panel>
 
         <q-tab-panel name="group">
-          With so much content to display at once, and often so little screen real-estate,
-          Cards have fast become the design pattern of choice for many companies, including
-          the likes of Google and Twitter.
+          With so much content to display at once, and often so little screen
+          real-estate, Cards have fast become the design pattern of choice for
+          many companies, including the likes of Google and Twitter.
         </q-tab-panel>
       </q-tab-panels>
     </div>
@@ -46,23 +55,34 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
-import { useI18n } from 'vue-i18n'
-const { t } = useI18n()
-// const search = ref('')
-const tab = ref('list')
-const initialPagination = {
-  sortBy: 'UUID',
-  rowsPerPage: 20
-}
+import { Client } from '@/utils/api';
+
+import { ref, onMounted } from 'vue';
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
+
+const tab_index = ref('list');
+
+const tableRef = ref()
+const rows = ref([])
+const filter = ref('')
+const loading = ref(false)
+const pagination = ref({
+  sortBy: 'id',
+  descending: false,
+  page: 1,
+  rowsPerPage: 2,
+  rowsNumber: 0
+})
 
 interface Camera {
-  UUID: string;
+  id: string;
   name: string;
-  brand?: string;
-  product_model?: string;
+  deviceid: string;
+  host: string;
   status: string;
-  description?: string;
+  description: string;
+  created: string;
 }
 
 interface Columns {
@@ -136,93 +156,113 @@ interface Columns {
 
 const columns: Columns[] = [
   {
-    name: 'UUID',
-    label: t('camera.profile.UUID'),
-    field: (row: Camera) => row.UUID,
+    name: 'deviceid',
+    label: t('camera.profile.deviceid'),
+    field: (row: Camera) => row.deviceid,
     required: true,
     align: 'right',
     headerClasses: 'q-table--col-auto-width',
-    sortable: true
+    sortable: true,
   },
   {
     name: 'name',
     label: t('camera.profile.name'),
     field: (row: Camera) => row.name,
     align: 'center',
-    headerClasses: 'q-table--col-auto-width'
+    headerClasses: 'q-table--col-auto-width',
   },
   {
-    name: 'product model',
-    label: t('camera.profile.product_model'),
-    field: (row: Camera) => row.product_model || t('other.unknown'),
+    name: 'host',
+    label: t('camera.profile.host'),
+    field: (row: Camera) => row.host || t('other.unknown'),
     align: 'center',
-    headerClasses: 'q-table--col-auto-width'
+    headerClasses: 'q-table--col-auto-width',
   },
   {
     name: 'status',
     label: t('camera.profile.status'),
-    field: (row: Camera) => t('camera.status.' + row.status, t('other.unknown')),
+    field: (row: Camera) =>
+      t('camera.status.' + row.status, t('other.unknown')),
     align: 'center',
-    headerClasses: 'q-table--col-auto-width'
+    headerClasses: 'q-table--col-auto-width',
+  },
+  {
+    name: 'created',
+    label: t('camera.profile.created'),
+    field: function (row: Camera) {
+      let created = row.created
+      return (created.length > 19 ? created.substring(0, 19) : created) + ' UTC'
+    },
+    align: 'left',
+    headerClasses: 'q-table--col-auto-width',
+    sortable: true,
   },
   {
     name: 'description',
     label: t('camera.profile.description'),
     field: (row: Camera) => row.description || '',
-    align: 'left'
+    align: 'left',
   }
-]
+];
 
-const rows: Camera[] = [
-  {
-    UUID: '1',
-    name: '摄像头A',
-    brand: '海康',
-    product_model: 'A1233',
-    status: 'offline'
-  },
-  {
-    UUID: '2',
-    name: '摄像头A',
-    brand: '海康',
-    product_model: 'A1233',
-    status: 'online'
-  }, {
-    UUID: '3',
-    name: '摄像头A',
-    brand: '海康',
-    product_model: 'A1233',
-    status: 'online'
-  }, {
-    UUID: '4',
-    name: '摄像头A',
-    brand: '海康',
-    product_model: 'A1233',
-    status: 'online'
-  }, {
-    UUID: '5',
-    name: '摄像头A',
-    brand: '海康',
-    product_model: 'A1233',
-    status: 'online'
-  }, {
-    UUID: '6',
-    name: '摄像头A',
-    brand: '海康',
-    product_model: 'A1233',
-    status: 'offine'
-  }, {
-    UUID: '7',
-    name: '摄像头A',
-    brand: '海康',
-    product_model: 'A1233',
-    status: 'online'
-  }, {
-    UUID: '8',
-    name: '摄像头A',
-    brand: '海康',
-    product_model: 'A1233',
-    status: 'online'
-  },
-]
+async function fetchFromServer(page: number, rowsPerPage: number, filter: string, sortBy: string, descending: boolean) {
+  return await Client.records.getList(
+    'cameras',
+    page,
+    rowsPerPage,
+    {
+      sort: (descending ? '-' : '') + sortBy,
+      filter: filter == '' ? null : '(name = "'+filter+'")'
+    }
+  );
+}
+
+interface Request {
+  /**
+   * Pagination object
+   */
+  pagination: {
+    /**
+     * Column name (from column definition)
+     */
+    sortBy: string;
+    /**
+     * Is sorting in descending order?
+     */
+    descending: boolean;
+    /**
+     * Page number (1-based)
+     */
+    page: number;
+    /**
+     * How many rows per page? 0 means Infinite
+     */
+    rowsPerPage: number;
+  };
+  /**
+   * String/Object to filter table with (the 'filter' prop)
+   */
+  filter?: string;
+}
+
+async function onRequest(props: Request) {
+  const { page, sortBy, rowsPerPage, descending } = props.pagination
+  const filter = props.filter
+
+  loading.value = true
+  const returnedData = await fetchFromServer(page, rowsPerPage, filter, sortBy, descending)
+  pagination.value.rowsNumber = returnedData.totalItems
+  pagination.value.page = page
+  pagination.value.rowsPerPage = rowsPerPage
+  pagination.value.descending = descending
+  pagination.value.sortBy = sortBy
+  let items = returnedData.items
+  rows.value.splice(0, rows.value.length, ...items)
+  loading.value = false
+}
+
+onMounted(() => {
+  tableRef.value.requestServerInteraction()
+})
+
 </script>
