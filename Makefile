@@ -27,6 +27,7 @@ GO2XUNIT = go2xunit$(SUFFIX)
 GOLINT   = golint$(SUFFIX)
 GOCOV    = gocov$(SUFFIX)
 GOCOVXML = gocov-xml$(SUFFIX)
+SWAG     = swag$(SUFFIX)
 
 export GO111MODULE=on
 
@@ -56,6 +57,9 @@ $(GO2XUNIT):
 
 $(GOX):
 	$Q $(GO) install github.com/mitchellh/gox@latest
+
+$(SWAG):
+	$Q $(GO) install github.com/swaggo/swag/cmd/swag@latest
 
 # Tools
 
@@ -107,8 +111,16 @@ fmt: ; $(info $(M) running gofmt…) @ ## Run gofmt on all source files
 	$Q $(GO) fmt $(PKGS)
 
 # Misc
+.PHONY: init
+init: ;$(info $(M) init…)	@ ## init
+	git submodule update --init --recursive
+	mkdir -p build/3rdpart/ZLMediaKit
+	cmake -D CMAKE_BUILD_TYPE=RELEASE -S 3rdpart/ZLMediaKit -B build/3rdpart/ZLMediaKit
+	cd build/3rdpart/ZLMediaKit && make -j
+	mv 3rdpart/ZLMediaKit/release/linux/RELEASE bin/ZLMediaKit
+
 .PHONY: gen
-gen: ; $(info $(M) generate…)	@ ## generate
+gen: $(SWAG); $(info $(M) generate…)	@ ## generate
 	$Q $(GO) generate
 
 .PHONY: clean

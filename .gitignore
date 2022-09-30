@@ -6,3 +6,4 @@ build/
 /go.sum
 bin/*
 temp/
+vendor/

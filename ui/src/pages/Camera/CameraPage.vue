@@ -13,7 +13,7 @@
     <div class="basis-full pt-6">
       <q-tabs align="left" v-model="tab" class="text-primary">
         <q-tab :label="t('pages.camera.list')" name="list" />
-        <q-tab :label="t('pages.camera.grid')" name="grid" />
+        <q-tab :label="t('pages.camera.grid')" name="group" />
         <q-tab :label="t('pages.camera.map')" name="map" />
       </q-tabs>
 
@@ -35,7 +35,7 @@
           </q-table>
         </q-tab-panel>
 
-        <q-tab-panel name="two">
+        <q-tab-panel name="group">
           With so much content to display at once, and often so little screen real-estate,
           Cards have fast become the design pattern of choice for many companies, including
           the likes of Google and Twitter.

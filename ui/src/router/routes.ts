@@ -11,8 +11,7 @@ const routes: RouteRecordRaw[] = [
     children: [
       { path: '', component: () => import('pages/Home/HomePage.vue') },
       { path: '/dashboard', component: () => import('pages/Home/HomePage.vue') },
-      { path: '/camera', component: () => import('pages/Camera/CameraPage.vue') },
-      { path: '/temp', component: () => import('pages/Temp/TempPage.vue') }
+      { path: '/camera', component: () => import('pages/Camera/CameraPage.vue') }
     ],
   },
   // {

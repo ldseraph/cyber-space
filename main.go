@@ -1,27 +1,35 @@
 package main
 
 import (
+	"net/http"
+	_ "net/http/pprof"
 	"video-intelligence/cmd"
-	"embed"
-	"io/fs"
+	_ "video-intelligence/docs"
+	_ "video-intelligence/migrations"
 )
 
-//go:embed ui/dist/spa/*
-var f embed.FS
+// @title           Video Intelligence
+// @version         0.1
 
-type assertFs struct {
-	fs     embed.FS
-	prefix string
-}
+// @description     Video Intelligence
+// @termsOfService  http://swagger.io/terms/
 
-func (a *assertFs) Open(name string) (fs.File, error) {
-	return a.fs.Open(a.prefix + name)
-}
+// @contact.name   beijingyingnuoweixun
+// @contact.url    https://e.gitee.com/beijingyingnuoweixun
+
+// @license.name  Apache 2.0
+// @license.url   http://www.apache.org/licenses/LICENSE-2.0.html
+
+// @host      localhost:8090
+// @BasePath  /api/v1
+
+// @securityDefinitions.basic  BasicAuth
 
 func main() {
-	cmd.AddStaticFS(&assertFs{
-		fs:     f,
-		prefix: "ui/dist/spa/",
-	})
+	//pprof
+	go func() {
+		http.ListenAndServe("0.0.0.0:6060", nil)
+	}()
+
 	cmd.Execute()
 }

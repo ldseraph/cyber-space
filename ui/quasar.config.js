@@ -97,6 +97,12 @@ module.exports = configure(function (/* ctx */) {
     devServer: {
       // https: true
       open: true, // opens browser window automatically
+      vueDevtools: true,
+      proxy: {
+        // string shorthand
+        '/api': 'http://localhost:8090',
+        '/_': 'http://localhost:8090',
+      }
     },
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#framework
