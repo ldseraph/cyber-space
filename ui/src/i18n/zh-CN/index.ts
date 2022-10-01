@@ -1,4 +1,6 @@
-export default {
+import type { DateTimeFormat } from '@intlify/core-base'
+
+export const zh_cn_message = {
   'video intelligence': '视频智能',
   sidebar: {
     home: '主页',
@@ -36,3 +38,20 @@ export default {
     unknown: '未知'
   }
 };
+
+export const zh_cn_datetime:DateTimeFormat = {
+  short: {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric'
+  },
+  long: {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    weekday: 'long',
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: true
+  }
+}

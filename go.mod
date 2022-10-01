@@ -12,6 +12,7 @@ require (
 	github.com/swaggo/swag v1.8.1
 	golang.org/x/net v0.0.0-20220921155015-db77216a4ee9
 )
+
 replace github.com/pocketbase/pocketbase => ./pkg/pocketbase
 
 require (

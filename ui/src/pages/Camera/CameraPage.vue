@@ -32,7 +32,7 @@
             <template v-slot:body-cell-status="props">
               <q-td :props="props">
                 <div class="flex flex-nowrap items-center">
-                  <div v-if="props.row.status == 'online'" class="w-3 h-3 rounded-full bg-red-500"></div>
+                  <div v-if="props.row.status == 'online'" class="w-3 h-3 rounded-full bg-green-500"></div>
                   <div v-else-if="props.row.status == 'offline'" class="w-3 h-3 rounded-full bg-stone-500"></div>
                   <div v-else class="w-3 h-3 rounded-full"></div>
                   <div class="pl-2">
@@ -55,16 +55,16 @@
 </template>
 
 <script lang="ts" setup>
-import { Client } from '@/utils/api';
+import { Client,Record } from '@/utils/api';
 
 import { ref, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
-const { t } = useI18n();
+const { t, d } = useI18n();
 
 const tab_index = ref('list');
 
 const tableRef = ref()
-const rows = ref([])
+const rows = ref<Record[]>([])
 const filter = ref('')
 const loading = ref(false)
 const pagination = ref({
@@ -190,8 +190,7 @@ const columns: Columns[] = [
     name: 'created',
     label: t('camera.profile.created'),
     field: function (row: Camera) {
-      let created = row.created
-      return (created.length > 19 ? created.substring(0, 19) : created) + ' UTC'
+      return d(row.created + ' UTC', 'long')
     },
     align: 'left',
     headerClasses: 'q-table--col-auto-width',
