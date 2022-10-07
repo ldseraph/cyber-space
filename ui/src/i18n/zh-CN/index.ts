@@ -15,19 +15,26 @@ export const zh_cn_message = {
   pages: {
     camera: {
       addcamera: '添加摄像头',
-      list: '列表',
-      grid: '网格',
+      tables: '表格',
+      groups: '组',
       map: '地图'
     }
   },
   camera: {
     profile: {
-      deviceid: '唯一编号',
+      serialNumber: '设备编号',
       name: '设备名称',
-      host: '网络地址',
       status: '状态',
       description: '说明',
-      created: '创建时间'
+      created: '创建时间',
+      info: '更多信息',
+      channel: '码流',
+      host: '网络地址',
+      rtsp:{
+        port: '端口号',
+        username: '用户名',
+        pwd: '密码',
+      }
     },
     status: {
       online: '在线',
@@ -35,6 +42,7 @@ export const zh_cn_message = {
     }
   },
   other: {
+    search: '搜索',
     unknown: '未知'
   }
 };

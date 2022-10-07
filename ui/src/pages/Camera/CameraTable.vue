@@ -1,67 +1,84 @@
 <template>
-  <q-page class="flex flex-col" padding>
-    <div class="basis-full flex items-center">
-      <div class="flex-1">
-        <div class="text-2xl font-bold text-primary">
-          {{ t('sidebar.camera') }}
+  <q-table ref="tableRef" :rows="rows" :columns="columns" row-key="id" v-model:pagination="pagination"
+    :loading="loading" color="primary" :filter="filter" binary-state-sort @request="onRequest">
+    <template v-slot:top-right>
+      <q-input borderless dense debounce="300" v-model="filter" :placeholder="t('other.search')">
+        <template v-slot:append>
+          <q-icon name="search" />
+        </template>
+      </q-input>
+    </template>
+
+    <template v-slot:body-cell-status="props">
+      <q-td :props="props">
+        <div class="flex flex-nowrap items-center justify-center">
+          <div v-if="props.row.status == 'online'" class="w-3 h-3 rounded-full bg-green-500"></div>
+          <div v-else-if="props.row.status == 'offline'" class="w-3 h-3 rounded-full bg-red-500"></div>
+          <div v-else class="w-3 h-3 rounded-full bg-stone-500"></div>
+          <div class="pl-2">
+            {{ props.value }}
+          </div>
         </div>
-      </div>
-      <div class="flex-none">
-        <q-btn color="primary" icon="add" :label="t('pages.camera.addcamera')" />
-      </div>
-    </div>
-    <div class="basis-full pt-6">
-      <q-tabs align="left" v-model="tab_index" class="text-primary">
-        <q-tab :label="t('pages.camera.list')" name="list" />
-        <q-tab :label="t('pages.camera.grid')" name="group" />
-        <q-tab :label="t('pages.camera.map')" name="map" />
-      </q-tabs>
+      </q-td>
+    </template>
 
-      <q-tab-panels v-model="tab_index" animated>
-        <q-tab-panel name="list">
-          <q-table ref="tableRef" :rows="rows" :columns="columns" row-key="id" v-model:pagination="pagination"
-            :loading="loading" :filter="filter" binary-state-sort @request="onRequest">
-            <template v-slot:top-right>
-              <q-input borderless dense debounce="300" v-model="filter" placeholder="Search">
-                <template v-slot:append>
-                  <q-icon name="search" />
-                </template>
-              </q-input>
-            </template>
-
-            <template v-slot:body-cell-status="props">
-              <q-td :props="props">
-                <div class="flex flex-nowrap items-center">
-                  <div v-if="props.row.status == 'online'" class="w-3 h-3 rounded-full bg-green-500"></div>
-                  <div v-else-if="props.row.status == 'offline'" class="w-3 h-3 rounded-full bg-stone-500"></div>
-                  <div v-else class="w-3 h-3 rounded-full"></div>
-                  <div class="pl-2">
-                    {{ props.value }}
+    <template v-slot:body-cell-info="props">
+      <q-td :props="props">
+        <div class="flex flex-nowrap items-center space-x-4">
+          <q-btn outline color="primary" label="RTSP">
+            <q-popup-proxy>
+              <q-card>
+                <q-card-section>
+                  <div class="flex space-x-2">
+                    <div>
+                      {{ t('camera.profile.rtsp.port') }}:
+                    </div>
+                    <div>
+                      {{ props.row.rtspPort }}
+                    </div>
                   </div>
-                </div>
-              </q-td>
-            </template>
-          </q-table>
-        </q-tab-panel>
+                  <div class="flex space-x-2">
+                    <div>
+                      {{ t('camera.profile.rtsp.username') }}:
+                    </div>
+                    <div>
+                      {{ props.row.rtspUsername }}
+                    </div>
+                  </div>
+                  <div class="flex space-x-2">
+                    <div>
+                      {{ t('camera.profile.rtsp.pwd') }}:
+                    </div>
 
-        <q-tab-panel name="group">
-          With so much content to display at once, and often so little screen
-          real-estate, Cards have fast become the design pattern of choice for
-          many companies, including the likes of Google and Twitter.
-        </q-tab-panel>
-      </q-tab-panels>
-    </div>
-  </q-page>
+                    <div class="flex flex-nowrap items-center">
+                      <q-icon :name="props.row.rtspPwdIsShow ? 'visibility_off' : 'visibility'"
+                        class="flex-1 cursor-pointer" @click="props.row.rtspPwdIsShow = !props.row.rtspPwdIsShow" />
+                      <div class="pl-2" v-show="props.row.rtspPwdIsShow">{{ props.row.rtspPwd }}</div>
+                    </div>
+                  </div>
+                </q-card-section>
+              </q-card>
+            </q-popup-proxy>
+          </q-btn>
+          <q-btn outline color="primary" label="GB28181">
+            <q-popup-proxy>
+            </q-popup-proxy>
+          </q-btn>
+          <q-btn outline color="primary" label="码流">
+            <q-popup-proxy>
+            </q-popup-proxy>
+          </q-btn>
+        </div>
+      </q-td>
+    </template>
+  </q-table>
 </template>
 
 <script lang="ts" setup>
-import { Client,Record } from '@/utils/api';
-
 import { ref, onMounted } from 'vue';
+import { Client, Record } from '@/utils/api';
 import { useI18n } from 'vue-i18n';
 const { t, d } = useI18n();
-
-const tab_index = ref('list');
 
 const tableRef = ref()
 const rows = ref<Record[]>([])
@@ -71,18 +88,22 @@ const pagination = ref({
   sortBy: 'id',
   descending: false,
   page: 1,
-  rowsPerPage: 2,
+  rowsPerPage: 10,
   rowsNumber: 0
 })
 
 interface Camera {
   id: string;
   name: string;
-  deviceid: string;
+  serialNumber: string;
   host: string;
+  rtspPort: number;
   status: string;
   description: string;
   created: string;
+  rtspUsername: string;
+  rtspPwd: string;
+  rtspPwdIsShow?: boolean;
 }
 
 interface Columns {
@@ -156,9 +177,9 @@ interface Columns {
 
 const columns: Columns[] = [
   {
-    name: 'deviceid',
-    label: t('camera.profile.deviceid'),
-    field: (row: Camera) => row.deviceid,
+    name: 'serialNumber',
+    label: t('camera.profile.serialNumber'),
+    field: (row: Camera) => row.serialNumber,
     required: true,
     align: 'right',
     headerClasses: 'q-table--col-auto-width',
@@ -174,7 +195,7 @@ const columns: Columns[] = [
   {
     name: 'host',
     label: t('camera.profile.host'),
-    field: (row: Camera) => row.host || t('other.unknown'),
+    field: (row: Camera) => row.host,
     align: 'center',
     headerClasses: 'q-table--col-auto-width',
   },
@@ -190,9 +211,9 @@ const columns: Columns[] = [
     name: 'created',
     label: t('camera.profile.created'),
     field: function (row: Camera) {
-      return d(row.created + ' UTC', 'long')
+      return d(row.created + 'Z', 'long')
     },
-    align: 'left',
+    align: 'center',
     headerClasses: 'q-table--col-auto-width',
     sortable: true,
   },
@@ -201,7 +222,29 @@ const columns: Columns[] = [
     label: t('camera.profile.description'),
     field: (row: Camera) => row.description || '',
     align: 'left',
+  },
+  {
+    name: 'info',
+    label: t('camera.profile.info'),
+    field: () => '',
+    align: 'left'
   }
+  // {
+  //   name: 'rtspUsername',
+  //   label: t('camera.profile.rtspUsername'),
+  //   field: (row: Camera) => row.rtspUsername,
+  //   align: 'center',
+  //   headerClasses: 'q-table--col-auto-width',
+  // },
+  // {
+  //   name: 'rtspPwd',
+  //   label: t('camera.profile.rtspPwd'),
+  //   field: (row: Camera) => {
+  //     return row.rtspPwd
+  //   },
+  //   align: 'center',
+  //   headerClasses: 'q-table--col-auto-width',
+  // },
 ];
 
 async function fetchFromServer(page: number, rowsPerPage: number, filter: string, sortBy: string, descending: boolean) {
@@ -211,7 +254,8 @@ async function fetchFromServer(page: number, rowsPerPage: number, filter: string
     rowsPerPage,
     {
       sort: (descending ? '-' : '') + sortBy,
-      filter: filter == '' ? null : '(name = "'+filter+'")'
+      filter: filter == '' ? null : '(name~"' + filter + '")',
+      expand: 'channels, groups'
     }
   );
 }
@@ -246,7 +290,7 @@ interface Request {
 
 async function onRequest(props: Request) {
   const { page, sortBy, rowsPerPage, descending } = props.pagination
-  const filter = props.filter
+  const filter = props.filter || ''
 
   loading.value = true
   const returnedData = await fetchFromServer(page, rowsPerPage, filter, sortBy, descending)
@@ -255,7 +299,10 @@ async function onRequest(props: Request) {
   pagination.value.rowsPerPage = rowsPerPage
   pagination.value.descending = descending
   pagination.value.sortBy = sortBy
-  let items = returnedData.items
+  let items = returnedData.items.map(function (item) {
+    item.pwd_is_show = false
+    return item
+  })
   rows.value.splice(0, rows.value.length, ...items)
   loading.value = false
 }
@@ -265,3 +312,4 @@ onMounted(() => {
 })
 
 </script>
+

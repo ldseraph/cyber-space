@@ -1,3 +1,10 @@
+ifeq (run,$(firstword $(MAKECMDGOALS)))
+  # use the rest as arguments for "run"
+  RUN_ARGS := $(wordlist 2,$(words $(MAKECMDGOALS)),$(MAKECMDGOALS))
+  # ...and turn them into do-nothing targets
+  $(eval $(RUN_ARGS):;@:)
+endif
+
 MODULE     = $(shell env GO111MODULE=on $(GO) list -m)
 BUILDTIME ?= $(shell date +%FT%T%z)
 GITCOMMIT ?= $(shell git rev-parse --short HEAD 2> /dev/null)
@@ -42,6 +49,10 @@ all: fmt lint | $(BIN) $(GOX); $(info $(M) building executable…) @ ## Build pr
 							-X $(MODULE)/pkg/version.GITBRANCH=$(GITBRANCH) " \
 		-osarch="$(ARCH)" \
 		-output="$(BIN)/{{.Dir}}_{{.OS}}_{{.Arch}}" .
+
+.PHONY: run
+run: fmt lint | $(BIN);
+	$Q $(GO) run main.go $(RUN_ARGS) 
 
 $(GOLINT):
 	$Q $(GO) install golang.org/x/lint/golint@latest

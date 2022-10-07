@@ -16,11 +16,11 @@
       <q-page-container>
         <router-view v-slot="{ Component }">
           <template v-if="Component">
-            <transition appear :name="'zoom-fade'" mode="out-in">
+            <transition appear name="zoom-fade" mode="out-in">
               <keep-alive>
-                <Suspense>
+                <suspense>
                   <component :is="Component"></component>
-                </Suspense>
+                </suspense>
               </keep-alive>
             </transition>
           </template>
@@ -58,18 +58,20 @@ onMounted(() => {
   }
 }
 
-.zoom-fade-enter-active,
-.zoom-fade-leave-active {
-  transition: transform 0.35s, opacity 0.28s ease-in-out;
-}
+::v-deep(.q-page-container) {
+  .zoom-fade-enter-active,
+  .zoom-fade-leave-active {
+    transition: transform 0.35s, opacity 0.28s ease-in-out;
+  }
 
-.zoom-fade-enter-from {
-  transform: scale(0.97);
-  opacity: 0;
-}
+  .zoom-fade-enter-from {
+    transform: scale(0.97);
+    opacity: 0;
+  }
 
-.zoom-fade-leave-to {
-  transform: scale(1.03);
-  opacity: 0;
+  .zoom-fade-leave-to {
+    transform: scale(1.03);
+    opacity: 0;
+  }
 }
 </style>
