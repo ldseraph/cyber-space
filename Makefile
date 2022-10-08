@@ -129,6 +129,7 @@ init: ;$(info $(M) init…)	@ ## init
 	cmake -D CMAKE_BUILD_TYPE=RELEASE -S 3rdpart/ZLMediaKit -B build/3rdpart/ZLMediaKit
 	cd build/3rdpart/ZLMediaKit && make -j
 	mv 3rdpart/ZLMediaKit/release/linux/RELEASE bin/ZLMediaKit
+	cd ui && yarn && quasar build
 
 .PHONY: gen
 gen: $(SWAG); $(info $(M) generate…)	@ ## generate

@@ -8,8 +8,11 @@
 // Configuration for your app
 // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js
 
+require('dotenv').config()
 const { configure } = require('quasar/wrappers');
 const path = require('path');
+
+console.log(process.env)
 
 module.exports = configure(function (/* ctx */) {
   return {
@@ -100,8 +103,8 @@ module.exports = configure(function (/* ctx */) {
       vueDevtools: true,
       proxy: {
         // string shorthand
-        '/api': 'http://localhost:8090',
-        '/_': 'http://localhost:8090',
+        '/api': process.env.DEV_SERVER,
+        '/_': process.env.DEV_SERVER,
       }
     },
 

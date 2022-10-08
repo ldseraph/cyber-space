@@ -42,7 +42,7 @@ watch(selected, async (newValue: string) => {
     return
   }
   console.log(newValue)
-  let ids = newValue.split("@")
+  let ids = newValue.split('@')
   let id = ids[ids.length - 1]
 
   try {
@@ -89,7 +89,7 @@ interface Details {
 }
 
 async function groupLazyLoad(details: Details) {
-  let id = details.node.id.split("@")
+  let id = details.node.id.split('@')
   details.done(childrenGroup(details.node.id, await Client.records.getOne('groups', id[id.length - 1], {
     expand: 'subGroups'
   })))
