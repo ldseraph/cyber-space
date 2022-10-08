@@ -12,8 +12,6 @@ require('dotenv').config()
 const { configure } = require('quasar/wrappers');
 const path = require('path');
 
-console.log(process.env)
-
 module.exports = configure(function (/* ctx */) {
   return {
     eslint: {
@@ -103,8 +101,8 @@ module.exports = configure(function (/* ctx */) {
       vueDevtools: true,
       proxy: {
         // string shorthand
-        '/api': process.env.DEV_SERVER,
-        '/_': process.env.DEV_SERVER,
+        '/api': process.env.DEV_SERVER || 'http://localhost:8090',
+        '/_': process.env.DEV_SERVER || 'http://localhost:8090',
       }
     },
 

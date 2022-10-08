@@ -32,4 +32,4 @@ yarn-error.log*
 *.njsproj
 *.sln
 yarn.lock
-.env.local
+.env
