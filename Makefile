@@ -125,7 +125,7 @@ fmt: ; $(info $(M) running gofmt…) @ ## Run gofmt on all source files
 .PHONY: init
 init: ;$(info $(M) init…)	@ ## init
 	git submodule update --init --recursive
-	mkdir -p build/3rdpart/ZLMediaKit
+	mkdir -p build/3rdpart/ZLMediaKit bin/ZLMediaKit
 	cmake -D CMAKE_BUILD_TYPE=RELEASE -S 3rdpart/ZLMediaKit -B build/3rdpart/ZLMediaKit
 	cd build/3rdpart/ZLMediaKit && make -j
 	mv 3rdpart/ZLMediaKit/release/linux/RELEASE bin/ZLMediaKit
