@@ -16,7 +16,7 @@ export const zh_cn_message = {
     camera: {
       addcamera: '添加摄像头',
       tables: '表格',
-      groups: '组',
+      groups: '分组',
       map: '地图'
     }
   },

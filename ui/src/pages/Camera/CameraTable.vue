@@ -181,7 +181,7 @@ const columns: Columns[] = [
     label: t('camera.profile.serialNumber'),
     field: (row: Camera) => row.serialNumber,
     required: true,
-    align: 'right',
+    align: 'center',
     headerClasses: 'q-table--col-auto-width',
     sortable: true,
   },
