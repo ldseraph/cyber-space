@@ -16,6 +16,12 @@ export const zh_cn_message = {
     databining: '数据联动',
     settings: '设置',
   },
+  url: {
+    home: '@:sidebar.home',
+    dashboard: '@:sidebar.dashboard',
+    camera: '@:sidebar.camera',
+    rtsp: '@:sidebar.camera_rtsp'
+  },
   pages: {
     camera: {
       addcamera: '添加摄像头',
@@ -34,7 +40,7 @@ export const zh_cn_message = {
       info: '更多信息',
       channel: '码流',
       host: '网络地址',
-      rtsp:{
+      rtsp: {
         port: '端口号',
         username: '用户名',
         pwd: '密码',
@@ -51,7 +57,7 @@ export const zh_cn_message = {
   }
 };
 
-export const zh_cn_datetime:DateTimeFormat = {
+export const zh_cn_datetime: DateTimeFormat = {
   short: {
     year: 'numeric',
     month: 'short',
