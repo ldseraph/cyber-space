@@ -39,7 +39,7 @@ SWAG     = swag$(SUFFIX)
 export GO111MODULE=on
 
 .PHONY: all
-all: fmt lint | $(BIN) $(GOX); $(info $(M) building executable…) @ ## Build program binary
+all: fmt lint gen | $(BIN) $(GOX); $(info $(M) building executable…) @ ## Build program binary
 	$Q $(GOX) \
 		-tags="release" \
 		-ldflags="-X $(MODULE)/pkg/version.BUILDTIME=$(BUILDTIME) \
@@ -134,6 +134,11 @@ init: ;$(info $(M) init…)	@ ## init
 .PHONY: gen
 gen: $(SWAG); $(info $(M) generate…)	@ ## generate
 	$Q $(GO) generate
+	$Q cd ui && quasar build
+
+.PHONY: migrate
+migrate: ; $(info $(M) migrate…)	@## migrate
+	$Q $(GO) run main.go pocketbase migrate collections
 
 .PHONY: clean
 clean: ; $(info $(M) cleaning…)	@ ## Cleanup everything
