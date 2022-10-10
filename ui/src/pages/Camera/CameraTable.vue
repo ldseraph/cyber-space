@@ -1,6 +1,11 @@
 <template>
   <q-table ref="tableRef" :rows="rows" :columns="columns" row-key="id" v-model:pagination="pagination"
     :loading="loading" color="primary" :filter="filter" binary-state-sort @request="onRequest">
+    <template v-slot:top-left>
+      <div class="flex">
+        <CameraDialog />
+      </div>
+    </template>
     <template v-slot:top-right>
       <q-input borderless dense debounce="300" v-model="filter" :placeholder="t('other.search')">
         <template v-slot:append>
@@ -78,6 +83,7 @@
 import { ref, onMounted } from 'vue';
 import { Client, Record } from '@/utils/api';
 import { useI18n } from 'vue-i18n';
+import CameraDialog from './CameraDialog.vue';
 const { t, d } = useI18n();
 
 const tableRef = ref()
@@ -306,6 +312,7 @@ async function onRequest(props: Request) {
   rows.value.splice(0, rows.value.length, ...items)
   loading.value = false
 }
+
 
 onMounted(() => {
   tableRef.value.requestServerInteraction()

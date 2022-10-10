@@ -6,9 +6,9 @@
           {{ t('sidebar.camera') }}
         </div>
       </div>
-      <div class="flex-none">
+      <!-- <div class="flex-none">
         <q-btn color="primary" icon="add" :label="t('pages.camera.addcamera')" />
-      </div>
+      </div> -->
     </div>
     <div class="basis-full pt-6">
       <q-tabs align="left" v-model="tab_index" class="text-primary">
