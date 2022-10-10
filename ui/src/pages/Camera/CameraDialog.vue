@@ -1,21 +1,22 @@
 <template>
   <q-btn color="primary" icon="add" :label="t('pages.camera.addcamera')" @click="add = true"></q-btn>
   <q-dialog v-model="add" persistent>
-    <q-card class="w-1/3">
+    <q-card class="w-full shadow-blue-500/50 shadow-lg">
       <q-card-section class="flex items-center ">
-        <div class="flex text-base font-bold pl-3"> {{t('pages.camera.addcamera')}} </div>
+        <div class="flex text-sm font-bold pl-3"> {{t('pages.camera.addcamera')}} </div>
         <q-space />
         <q-btn icon="close" size='sm' flat round dense v-close-popup />
       </q-card-section>
+      <q-separator />
 
-      <q-card-section class="flex">
-        <div class="flex flex-col flex-1 space-y-6 px-6">
-          <div v-for="(item,index,key) in items" :key="key" class="flex flex-col ">
-            <div class="flex">
-              {{t('camera.profile.'+String(index))}}
+      <q-card-section class="flex  ">
+        <div class="flex flex-col  flex-1 px-6">
+          <div v-for="(item,index,key) in items" :key="key" class="flex flex-1 py-4  items-center ">
+            <div class="flex ">
+              {{t('camera.profile.'+String(index))}}:
             </div>
-            <div class="flex flex-1">
-              <input type="text" class="text-sm box-border flex-1 h-8 border pl-4 rounded  shadow-sm border-slate-300
+            <div class=" flex flex-1 pl-4 items-center ">
+              <input type="text" class="text-sm box-border  flex flex-1 h-10 border pl-4 rounded  shadow-sm border-slate-300
             focus:outline-none focus:border-sky-500 focus:ring-1" v-model="items[index]">
             </div>
           </div>
@@ -80,12 +81,11 @@ const items = reactive(
     serialNumber: '',
     name: '',
     host: '',
-    rtspPort: '',
     status: '',
     description: '',
     rtspUsername: '',
+    rtspPort: '',
     rtspPwd: ''
-    
   }
 
 )
