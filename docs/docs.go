@@ -26,7 +26,7 @@ const docTemplate = `{
     "paths": {
         "/devices/{id}/channels": {
             "post": {
-                "description": "通过此接口在设备下新增通道，获取通道id",
+                "description": "ping 接口",
                 "consumes": [
                     "application/x-www-form-urlencoded"
                 ],
@@ -36,7 +36,7 @@ const docTemplate = `{
                 "tags": [
                     "channels"
                 ],
-                "summary": "通道新增接口",
+                "summary": "ping",
                 "parameters": [
                     {
                         "type": "string",

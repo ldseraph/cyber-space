@@ -161,7 +161,7 @@ func migrateCreateHandler(template string, args []string) error {
 		fmt.Sprintf("%d_%s.go", time.Now().Unix(), inflector.Snakecase(name)),
 	)
 
-	confirm := false
+	confirm := true
 	prompt := &survey.Confirm{
 		Message: fmt.Sprintf("Do you really want to create migration %q?", resultFilePath),
 	}

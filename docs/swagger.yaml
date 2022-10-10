@@ -16,7 +16,7 @@ paths:
     post:
       consumes:
       - application/x-www-form-urlencoded
-      description: 通过此接口在设备下新增通道，获取通道id
+      description: ping 接口
       parameters:
       - description: 设备id
         in: path
@@ -58,7 +58,7 @@ paths:
           description: ""
           schema:
             type: string
-      summary: 通道新增接口
+      summary: ping
       tags:
       - channels
 securityDefinitions:
