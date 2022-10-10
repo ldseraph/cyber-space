@@ -17,6 +17,10 @@ export interface sidebarItemsMenu {
   submenu?: sidebarItemsMenu[];
 }
 
+export function isSidebarItemsMenu(menuItem: sidebarHeaderMenu | sidebarItemsMenu): menuItem is sidebarItemsMenu {
+  return (<sidebarItemsMenu>menuItem).name !== undefined;
+}
+
 export const useSidebarStore = defineStore('sidebar', {
   state: () => ({
     title: String(configs.app.name),
@@ -39,8 +43,24 @@ export const useSidebarStore = defineStore('sidebar', {
       // },
       {
         name: 'sidebar.camera',
-        icon: 'videocam',
-        url: '/camera'
+        icon: 'o_videocam',
+        submenu: [{
+          name: 'sidebar.camera_rtsp',
+          icon: 'img:public/rtsp_camera.svg',
+          url: '/camera/rtsp'
+        }, {
+          name: 'sidebar.camera_gb28181',
+          icon: 'img:public/gb28181_camera.svg',
+          url: '/camera/gb28181'
+        },{
+          name: 'sidebar.camera_group',
+          icon: 'o_account_tree',
+          url: '/camera/group'
+        },{
+          name: 'sidebar.camera_map',
+          icon: 'o_map',
+          url: '/camera/map'
+        }]
       },
       // {
       //   name: 'sidebar.marketplace',

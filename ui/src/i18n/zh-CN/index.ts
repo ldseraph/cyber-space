@@ -8,6 +8,10 @@ export const zh_cn_message = {
     organization: '组织',
     marketplace: '市场',
     camera: '摄像头管理',
+    camera_rtsp: 'RTSP设备',
+    camera_gb28181: 'GB28181设备',
+    camera_group: '分组',
+    camera_map: '地图',
     intelligence: '智能管理',
     databining: '数据联动',
     settings: '设置',
@@ -16,7 +20,7 @@ export const zh_cn_message = {
     camera: {
       addcamera: '添加摄像头',
       tables: '表格',
-      groups: '组',
+      groups: '分组',
       map: '地图'
     }
   },
