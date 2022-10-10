@@ -14,18 +14,6 @@
       </q-input>
     </template>
 
-    <template v-slot:body-cell-status="props">
-      <q-td :props="props">
-        <div class="flex flex-nowrap items-center justify-center">
-          <div v-if="props.row.status == 'online'" class="w-3 h-3 rounded-full bg-green-500"></div>
-          <div v-else-if="props.row.status == 'offline'" class="w-3 h-3 rounded-full bg-red-500"></div>
-          <div v-else class="w-3 h-3 rounded-full bg-stone-500"></div>
-          <div class="pl-2">
-            {{ props.value }}
-          </div>
-        </div>
-      </q-td>
-    </template>
 
     <template v-slot:body-cell-info="props">
       <q-td :props="props">
