@@ -1,7 +1,7 @@
 <template>
   <q-page class="flex flex-col" padding>
     <RexBreadcrumb />
-    <div class="pt-4">
+    <div class="flex-1">
       <q-table ref="tableRef" :rows="rows" :columns="columns" row-key="id" v-model:pagination="pagination"
         :loading="loading" color="primary" :filter="filter" binary-state-sort @request="onRequest">
         <template v-slot:top-right>
@@ -25,52 +25,12 @@
           </q-td>
         </template>
 
-        <template v-slot:body-cell-info="props">
+        <template v-slot:body-cell-password="props">
           <q-td :props="props">
-            <div class="flex flex-nowrap items-center space-x-4">
-              <q-btn outline color="primary" label="RTSP">
-                <q-popup-proxy>
-                  <q-card>
-                    <q-card-section>
-                      <div class="flex space-x-2">
-                        <div>
-                          {{ t('camera.profile.rtsp.port') }}:
-                        </div>
-                        <div>
-                          {{ props.row.rtspPort }}
-                        </div>
-                      </div>
-                      <div class="flex space-x-2">
-                        <div>
-                          {{ t('camera.profile.rtsp.username') }}:
-                        </div>
-                        <div>
-                          {{ props.row.rtspUsername }}
-                        </div>
-                      </div>
-                      <div class="flex space-x-2">
-                        <div>
-                          {{ t('camera.profile.rtsp.pwd') }}:
-                        </div>
-
-                        <div class="flex flex-nowrap items-center">
-                          <q-icon :name="props.row.rtspPwdIsShow ? 'visibility_off' : 'visibility'"
-                            class="flex-1 cursor-pointer" @click="props.row.rtspPwdIsShow = !props.row.rtspPwdIsShow" />
-                          <div class="pl-2" v-show="props.row.rtspPwdIsShow">{{ props.row.rtspPwd }}</div>
-                        </div>
-                      </div>
-                    </q-card-section>
-                  </q-card>
-                </q-popup-proxy>
-              </q-btn>
-              <q-btn outline color="primary" label="GB28181">
-                <q-popup-proxy>
-                </q-popup-proxy>
-              </q-btn>
-              <q-btn outline color="primary" label="码流">
-                <q-popup-proxy>
-                </q-popup-proxy>
-              </q-btn>
+            <div class="flex flex-nowrap items-center">
+              <q-icon :name="props.row.passwordIsShow ? 'visibility_off' : 'visibility'" class="flex-1 cursor-pointer"
+                @click="props.row.passwordIsShow = !props.row.passwordIsShow" />
+              <div class="pl-2" v-show="props.row.passwordIsShow">{{ props.row.password }}</div>
             </div>
           </q-td>
         </template>
@@ -98,125 +58,49 @@ const pagination = ref({
   rowsNumber: 0
 })
 
-interface Camera {
+interface RtspCamera {
   id: string;
-  name: string;
-  serialNumber: string;
-  host: string;
-  rtspPort: number;
-  status: string;
-  description: string;
   created: string;
-  rtspUsername: string;
-  rtspPwd: string;
-  rtspPwdIsShow?: boolean;
+  name: string;
+  host: string;
+  port: number;
+  user: string;
+  password: string;
+  description: string;
+  status: 'offline' | 'online';
+  passwordIsShow?: boolean;
 }
 
 interface Columns {
-  /**
-   * Unique id, identifies column, (used by pagination.sortBy, 'body-cell-[name]' slot, ...)
-   */
   name: string;
-  /**
-   * Label for header
-   */
   label: string;
-  /**
-   * Row Object property to determine value for this column or function which maps to the required property
-   * @param row The current row being processed
-   * @returns Value for this column
-   */
-  field: string | ((row: Camera) => string);
-  /**
-   * If we use visible-columns, this col will always be visible
-   */
+  field: string | ((row: RtspCamera) => string);
   required?: boolean;
-  /**
-   * Horizontal alignment of cells in this column
-   * Default value: right
-   */
   align?: 'left' | 'right' | 'center';
-  /**
-   * Tell QTable you want this column sortable
-   */
   sortable?: boolean;
-  /**
-   * Compare function if you have some custom data or want a specific way to compare two rows
-   * @param a Value of the first comparison term
-   * @param b Value of the second comparison term
-   * @param rowA Full Row object in which is contained the first term
-   * @param rowB Full Row object in which is contained the second term
-   * @returns Comparison result of term 'a' with term 'b'. Less than 0 when 'a' should come first; greater than 0 if 'b' should come first; equal to 0 if their position must not be changed with respect to each other
-   */
-  sort?: (a: Camera, b: Camera, rowA: Camera, rowB: Camera) => number;
-  /**
-   * Set column sort order: 'ad' (ascending-descending) or 'da' (descending-ascending); Overrides the 'column-sort-order' prop
-   * Default value: ad
-   */
+  sort?: (a: RtspCamera, b: RtspCamera, rowA: RtspCamera, rowB: RtspCamera) => number;
   sortOrder?: 'ad' | 'da';
-  /**
-   * Function you can apply to format your data
-   * @param val Value of the cell
-   * @param row Full Row object in which the cell is contained
-   * @returns The resulting formatted value
-   */
-  format?: (val: Camera, row: Camera) => string;
-  /**
-   * Style to apply on normal cells of the column
-   * @param row The current row being processed
-   */
-  style?: string | ((row: Camera) => string);
-  /**
-   * Classes to add on normal cells of the column
-   * @param row The current row being processed
-   */
-  classes?: string | ((row: Camera) => string);
-  /**
-   * Style to apply on header cells of the column
-   */
+  format?: (val: RtspCamera, row: RtspCamera) => string;
+  style?: string | ((row: RtspCamera) => string);
+  classes?: string | ((row: RtspCamera) => string);
   headerStyle?: string;
-  /**
-   * Classes to add on header cells of the column
-   */
   headerClasses?: string;
 }
 
 const columns: Columns[] = [
   {
-    name: 'serialNumber',
-    label: t('camera.profile.serialNumber'),
-    field: (row: Camera) => row.serialNumber,
+    name: 'name',
+    label: t('rtsp.profile.name'),
+    field: (row: RtspCamera) => row.name,
     required: true,
     align: 'center',
     headerClasses: 'q-table--col-auto-width',
     sortable: true,
   },
   {
-    name: 'name',
-    label: t('camera.profile.name'),
-    field: (row: Camera) => row.name,
-    align: 'center',
-    headerClasses: 'q-table--col-auto-width',
-  },
-  {
-    name: 'host',
-    label: t('camera.profile.host'),
-    field: (row: Camera) => row.host,
-    align: 'center',
-    headerClasses: 'q-table--col-auto-width',
-  },
-  {
-    name: 'status',
-    label: t('camera.profile.status'),
-    field: (row: Camera) =>
-      t('camera.status.' + row.status, t('other.unknown')),
-    align: 'center',
-    headerClasses: 'q-table--col-auto-width',
-  },
-  {
     name: 'created',
-    label: t('camera.profile.created'),
-    field: function (row: Camera) {
+    label: t('rtsp.profile.created'),
+    field: function (row: RtspCamera) {
       return d(row.created + 'Z', 'long')
     },
     align: 'center',
@@ -224,38 +108,52 @@ const columns: Columns[] = [
     sortable: true,
   },
   {
-    name: 'description',
-    label: t('camera.profile.description'),
-    field: (row: Camera) => row.description || '',
-    align: 'left',
+    name: 'host',
+    label: t('rtsp.profile.host'),
+    field: (row: RtspCamera) => row.host,
+    align: 'center',
+    headerClasses: 'q-table--col-auto-width',
   },
   {
-    name: 'info',
-    label: t('camera.profile.info'),
-    field: () => '',
-    align: 'left'
+    name: 'port',
+    label: t('rtsp.profile.port'),
+    field: (row: RtspCamera) => row.port.toString(),
+    align: 'center',
+    headerClasses: 'q-table--col-auto-width',
+  },
+  {
+    name: 'user',
+    label: t('rtsp.profile.user'),
+    field: (row: RtspCamera) => row.user,
+    align: 'center',
+    headerClasses: 'q-table--col-auto-width',
+  },
+  {
+    name: 'password',
+    label: t('rtsp.profile.password'),
+    field: (row: RtspCamera) => row.password,
+    align: 'center',
+    headerClasses: 'q-table--col-auto-width',
+  },
+  {
+    name: 'status',
+    label: t('rtsp.profile.status'),
+    field: (row: RtspCamera) =>
+      t('rtsp.status.' + row.status, t('other.unknown')),
+    align: 'center',
+    headerClasses: 'q-table--col-auto-width',
+  },
+  {
+    name: 'description',
+    label: t('rtsp.profile.description'),
+    field: (row: RtspCamera) => row.description,
+    align: 'center',
   }
-  // {
-  //   name: 'rtspUsername',
-  //   label: t('camera.profile.rtspUsername'),
-  //   field: (row: Camera) => row.rtspUsername,
-  //   align: 'center',
-  //   headerClasses: 'q-table--col-auto-width',
-  // },
-  // {
-  //   name: 'rtspPwd',
-  //   label: t('camera.profile.rtspPwd'),
-  //   field: (row: Camera) => {
-  //     return row.rtspPwd
-  //   },
-  //   align: 'center',
-  //   headerClasses: 'q-table--col-auto-width',
-  // },
 ];
 
 async function fetchFromServer(page: number, rowsPerPage: number, filter: string, sortBy: string, descending: boolean) {
   return await Client.records.getList(
-    'cameras',
+    'rtsp_cameras',
     page,
     rowsPerPage,
     {

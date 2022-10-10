@@ -30,21 +30,16 @@ export const zh_cn_message = {
       map: '地图'
     }
   },
-  camera: {
+  rtsp: {
     profile: {
-      serialNumber: '设备编号',
       name: '设备名称',
-      status: '状态',
+      host: '主机名',
+      port: '端口号',
+      user: '用户名',
+      password: '密码',
       description: '说明',
-      created: '创建时间',
-      info: '更多信息',
-      channel: '码流',
-      host: '网络地址',
-      rtsp: {
-        port: '端口号',
-        username: '用户名',
-        pwd: '密码',
-      }
+      status: '状态',
+      created: '创建时间'
     },
     status: {
       online: '在线',

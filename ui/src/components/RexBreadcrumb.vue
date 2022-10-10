@@ -1,5 +1,5 @@
 <template>
-  <q-breadcrumbs>
+  <q-breadcrumbs class="py-4">
     <template v-for="(item, index) in matched" :key="index">
       <q-breadcrumbs-el v-if="item.components&&item.name" :to="{ path: item.path }"
         :label="t('url.'+item.name.toString())"
@@ -16,5 +16,4 @@ import { useRoute } from 'vue-router'
 const { t } = useI18n();
 const route = useRoute();
 const matched = computed(() => route.matched)
-console.log(matched.value)
 </script>
