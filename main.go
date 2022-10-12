@@ -6,6 +6,7 @@ import (
 	"video-intelligence/cmd"
 	_ "video-intelligence/docs"
 	_ "video-intelligence/migrations"
+	_ "video-intelligence/service"
 )
 
 // @title           Video Intelligence

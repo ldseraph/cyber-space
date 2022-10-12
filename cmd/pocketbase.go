@@ -56,6 +56,11 @@ func init() {
 	AddCommand(pb.RootCmd)
 }
 
+// AddInit Add Init Hook
+func AddInit(fn func(e *core.ServeEvent) error) {
+	pb.OnBeforeServe().Add(fn)
+}
+
 // AddRoute Add OnBeforeServe Route Hook
 func AddRoute(fn func(e *echo.Echo) error) {
 	pb.OnBeforeServe().Add(func(e *core.ServeEvent) error {
