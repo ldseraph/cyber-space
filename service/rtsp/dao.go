@@ -4,12 +4,14 @@ import "github.com/pocketbase/pocketbase/daos"
 
 var dao *daos.Dao
 
-type RtspCameras struct {
+// Camera is rtsp camera model
+type Camera struct {
 	Name string
 }
 
-func FindAll() ([]RtspCameras, error) {
-	rows := []RtspCameras{}
+// FindAll find all rtsp camera model
+func FindAll() ([]Camera, error) {
+	rows := []Camera{}
 	collection, err := dao.FindCollectionByNameOrId("rtsp_cameras")
 	if err != nil {
 		return nil, err
